@@ -95,5 +95,51 @@ public class AssignmentTwo {
         System.out.println();
 
         ride.displayVisitHistoryByNameAndTicketType();
+
+        System.out.println();
+        System.out.println("=== Part 5 - Operating Attractions ===");
+
+        Ride testRide = new Ride(102, "Roller Coaster", 2);
+        Show show = new Show(201, "Magic Show", 50);
+
+        Staff rideOperator =
+                new Staff(2, "Chris", 35, "Ride Operator");
+
+        Staff showOperator =
+                new Staff(3, "Jamie", 29, "Show Operator");
+
+        testRide.assignOperator(rideOperator);
+        show.assignOperator(showOperator);
+
+        Visitor v6 =
+                new Visitor(1007, "Morgan", 19, "Student");
+
+        Visitor v7 =
+                new Visitor(1008, "Casey", 26, "Adult");
+
+        testRide.joinWaitingLine(v6);
+        testRide.joinWaitingLine(v7);
+
+        System.out.println();
+        System.out.println("Ride with visitors waiting:");
+
+        testRide.runCycle();
+
+        System.out.println();
+        System.out.println("Ride with an empty waiting line:");
+
+        testRide.runCycle();
+
+        System.out.println();
+        System.out.println("Show with no visitors waiting:");
+
+        show.runCycle();
+
+        System.out.println();
+        System.out.println("Ride cycle count: "
+                + testRide.getCycleCount());
+
+        System.out.println("Show cycle count: "
+                + show.getCycleCount());
     }
 }
