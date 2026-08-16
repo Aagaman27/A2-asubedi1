@@ -87,6 +87,10 @@ public abstract class Attraction {
                 + " joined the waiting line for " + getName() + ".");
     }
 
+    public List<Visitor> getWaitingLine() {
+        return new ArrayList<>(waitingLine);
+    }
+
     public void displayWaitingLine() {
         if (waitingLine.isEmpty()) {
             System.out.println(getName() + " waiting line is empty.");
@@ -145,6 +149,14 @@ public abstract class Attraction {
 
     public List<Visitor> getVisitHistory() {
         return new ArrayList<>(visitHistory);
+    }
+
+    public void restoreVisitor(Visitor visitor) {
+        if (visitor == null) {
+            throw new IllegalArgumentException("Visitor cannot be null.");
+        }
+
+        visitHistory.add(visitor);
     }
 
     public void displayVisitHistory() {
@@ -214,6 +226,42 @@ public abstract class Attraction {
             System.out.println(getName()
                     + " performed with no visitors waiting.");
         }
+
+        cycleCount++;
+
+        System.out.println("Cycle completed for "
+                + getName() + ".");
+    }
+
+    public void runCycle(ParkCounter counter) {
+        if (counter == null) {
+            throw new IllegalArgumentException("Park counter cannot be null.");
+        }
+
+        if (!canRun()) {
+            return;
+        }
+
+        int served = 0;
+        int limit = maxVisitorsPerCycle;
+
+        while (served < limit && !waitingLine.isEmpty()) {
+            Visitor visitor = waitingLine.poll();
+
+            visitHistory.add(visitor);
+
+            System.out.println(visitor.getName()
+                    + " was served by " + getName() + ".");
+
+            served++;
+        }
+
+        if (served == 0) {
+            System.out.println(getName()
+                    + " performed with no visitors waiting.");
+        }
+
+        counter.addVisitors(served);
 
         cycleCount++;
 

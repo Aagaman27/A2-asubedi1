@@ -6,9 +6,11 @@ import java.util.Set;
 public class Park {
 
     private final Map<Integer, Attraction> attractions;
+    private int totalVisitorsServed;
 
     public Park() {
         attractions = new HashMap<>();
+        totalVisitorsServed = 0;
     }
 
     public void registerAttraction(Attraction attraction) {
@@ -43,12 +45,17 @@ public class Park {
         return attraction;
     }
 
+    public Map<Integer, Attraction> getAttractions() {
+        return attractions;
+    }
+
     public void displayVisitorCounts() {
         System.out.println("Visitor counts for all attractions:");
 
         for (Attraction attraction : attractions.values()) {
             System.out.println("  - " + attraction.getName()
-                    + ": " + attraction.getVisitCount() + " seats served");
+                    + ": " + attraction.getVisitCount()
+                    + " seats served");
         }
     }
 
@@ -65,5 +72,17 @@ public class Park {
     public void displayDistinctVisitorCount() {
         System.out.println("Distinct visitors served across the park: "
                 + getDistinctVisitorCount());
+    }
+
+    public synchronized void addVisitorsServed(int count) {
+        totalVisitorsServed += count;
+    }
+
+    public synchronized int getTotalVisitorsServed() {
+        return totalVisitorsServed;
+    }
+
+    public synchronized void resetTotalVisitorsServed() {
+        totalVisitorsServed = 0;
     }
 }

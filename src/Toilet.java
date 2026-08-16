@@ -1,17 +1,17 @@
 public class Toilet implements Inspectable {
 
-    private int id;
-    private String name;
+    private final int id;
+    private final String name;
     private String inspectionResult;
     private boolean closedForInspection;
 
     public Toilet(int id, String name) {
         if (id <= 0) {
-            throw new IllegalArgumentException("Toilet ID must be a positive number.");
+            throw new IllegalArgumentException("Toilet ID must be a positive number");
         }
 
         if (name == null || name.trim().isEmpty()) {
-            throw new IllegalArgumentException("Toilet name cannot be empty.");
+            throw new IllegalArgumentException("Toilet name must not be empty");
         }
 
         this.id = id;
@@ -31,7 +31,7 @@ public class Toilet implements Inspectable {
     @Override
     public void recordInspectionResult(String result) {
         if (result == null || result.trim().isEmpty()) {
-            throw new IllegalArgumentException("Inspection result cannot be empty.");
+            throw new IllegalArgumentException("Inspection result cannot be empty");
         }
 
         this.inspectionResult = result.trim();
