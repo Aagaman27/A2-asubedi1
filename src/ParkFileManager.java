@@ -70,7 +70,9 @@ public class ParkFileManager {
                 }
             }
 
-            System.out.println("Park backup saved successfully to " + fileName + ".");
+            System.out.println(
+                    "Park backup saved successfully to " + fileName + "."
+            );
 
         } catch (IOException e) {
             System.out.println("Backup failed: " + e.getMessage());
@@ -80,7 +82,8 @@ public class ParkFileManager {
     public static Park loadPark(String fileName) {
         Park park = new Park();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+        try (BufferedReader reader =
+                     new BufferedReader(new FileReader(fileName))) {
 
             String line;
 
@@ -92,7 +95,9 @@ public class ParkFileManager {
                     if (parts[0].equals("ATTRACTION")) {
 
                         if (parts.length != 9) {
-                            throw new IllegalArgumentException("Invalid attraction record.");
+                            throw new IllegalArgumentException(
+                                    "Invalid attraction record."
+                            );
                         }
 
                         String type = parts[1];
@@ -103,11 +108,15 @@ public class ParkFileManager {
                         Attraction attraction;
 
                         if (type.equals("RIDE")) {
-                            attraction = new Ride(id, name, maxVisitors);
+                            attraction =
+                                    new Ride(id, name, maxVisitors);
                         } else if (type.equals("SHOW")) {
-                            attraction = new Show(id, name, maxVisitors);
+                            attraction =
+                                    new Show(id, name, maxVisitors);
                         } else {
-                            throw new IllegalArgumentException("Unknown attraction type.");
+                            throw new IllegalArgumentException(
+                                    "Unknown attraction type."
+                            );
                         }
 
                         if (!parts[5].equals("NONE")) {
@@ -126,12 +135,16 @@ public class ParkFileManager {
                     } else if (parts[0].equals("WAITING")) {
 
                         if (parts.length != 6) {
-                            throw new IllegalArgumentException("Invalid waiting record.");
+                            throw new IllegalArgumentException(
+                                    "Invalid waiting record."
+                            );
                         }
 
-                        int attractionId = Integer.parseInt(parts[1]);
+                        int attractionId =
+                                Integer.parseInt(parts[1]);
 
-                        Attraction attraction = park.getAttraction(attractionId);
+                        Attraction attraction =
+                                park.getAttraction(attractionId);
 
                         if (attraction == null) {
                             throw new IllegalArgumentException(
@@ -151,12 +164,16 @@ public class ParkFileManager {
                     } else if (parts[0].equals("HISTORY")) {
 
                         if (parts.length != 6) {
-                            throw new IllegalArgumentException("Invalid history record.");
+                            throw new IllegalArgumentException(
+                                    "Invalid history record."
+                            );
                         }
 
-                        int attractionId = Integer.parseInt(parts[1]);
+                        int attractionId =
+                                Integer.parseInt(parts[1]);
 
-                        Attraction attraction = park.getAttraction(attractionId);
+                        Attraction attraction =
+                                park.getAttraction(attractionId);
 
                         if (attraction == null) {
                             throw new IllegalArgumentException(
@@ -171,22 +188,33 @@ public class ParkFileManager {
                                 parts[5]
                         );
 
-                        attraction.recordVisitor(visitor);
+                        attraction.restoreVisitor(visitor);
 
                     } else {
-                        throw new IllegalArgumentException("Unknown record type.");
+                        throw new IllegalArgumentException(
+                                "Unknown record type."
+                        );
                     }
 
                 } catch (Exception e) {
-                    System.out.println("Skipping malformed line: " + line);
-                    System.out.println("Reason: " + e.getMessage());
+                    System.out.println(
+                            "Skipping malformed line: " + line
+                    );
+                    System.out.println(
+                            "Reason: " + e.getMessage()
+                    );
                 }
             }
 
-            System.out.println("Park restored successfully from " + fileName + ".");
+            System.out.println(
+                    "Park restored successfully from " + fileName + "."
+            );
 
         } catch (IOException e) {
-            System.out.println("Restore failed: " + e.getMessage());
+            System.out.println(
+                    "Restore failed: " + fileName
+                            + " (" + e.getMessage() + ")"
+            );
         }
 
         return park;

@@ -1,22 +1,97 @@
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class AssignmentTwo {
 
     public static void main(String[] args) {
 
-        System.out.println("=== Ride Test ===");
+        System.out.println("=== Part 1 - People ===");
 
         Staff mike = new Staff(1, "Mike", 30, "Ride Operator");
-
-        Ride ride = new Ride(101, "Thunder Ride", 2);
-
-        ride.assignOperator(mike);
+        Staff chris = new Staff(2, "Chris", 35, "Ride Operator");
+        Staff jamie = new Staff(3, "Jamie", 32, "Show Operator");
 
         Visitor v1 = new Visitor(1001, "Alex", 25, "Adult");
         Visitor v2 = new Visitor(1002, "Sam", 28, "Adult");
         Visitor v3 = new Visitor(1003, "Jordan", 22, "Adult");
+
+        System.out.println(mike);
+        System.out.println(chris);
+        System.out.println(jamie);
+
+        System.out.println(v1);
+        System.out.println(v2);
+        System.out.println(v3);
+
+        List<Visitor> visitors = new ArrayList<>();
+
+        visitors.add(v1);
+        visitors.add(v2);
+        visitors.add(v3);
+
+        Collections.sort(visitors);
+
+        System.out.println();
+        System.out.println("Visitors sorted by age:");
+
+        for (Visitor visitor : visitors) {
+            System.out.println("  - " + visitor);
+        }
+
+        System.out.println();
+        System.out.println("=== Part 2 - Attractions and Inspection ===");
+
+        Ride ride = new Ride(101, "Thunder Ride", 2);
+        Toilet toilet = new Toilet(201, "Main Park Toilet");
+
+        ride.assignOperator(mike);
+
+        System.out.println();
+        System.out.println(ride);
+
+        System.out.println("Inspection result: "
+                + ride.getInspectionResult());
+
+        System.out.println("Closed for inspection: "
+                + ride.isClosedForInspection());
+
+        System.out.println();
+        System.out.println("Ride inspection:");
+
+        mike.performInspection(ride);
+
+        System.out.println();
+        System.out.println("After ride inspection:");
+
+        System.out.println("Inspection result: "
+                + ride.getInspectionResult());
+
+        System.out.println("Closed for inspection: "
+                + ride.isClosedForInspection());
+
+        System.out.println();
+        System.out.println("Toilet inspection:");
+
+        mike.performInspection(toilet);
+
+        System.out.println("Inspection result: "
+                + toilet.getInspectionResult());
+
+        System.out.println("Closed for inspection: "
+                + toilet.isClosedForInspection());
+
+        System.out.println();
+        System.out.println("Removing ride operator:");
+
+        ride.removeOperator();
+
+        System.out.println(ride);
+
+        System.out.println();
+        System.out.println("=== Part 3 - Waiting Line ===");
+
+        ride.assignOperator(mike);
 
         ride.joinWaitingLine(v1);
         ride.joinWaitingLine(v2);
@@ -37,30 +112,6 @@ public class AssignmentTwo {
         System.out.println();
         System.out.println(ride);
 
-        System.out.println("Inspection result: "
-                + ride.getInspectionResult());
-
-        System.out.println("Closed for inspection: "
-                + ride.isClosedForInspection());
-
-        System.out.println();
-        System.out.println("=== Inspection Test ===");
-
-        mike.performInspection(ride);
-
-        System.out.println();
-        System.out.println("After inspection:");
-
-        System.out.println("Inspection result: "
-                + ride.getInspectionResult());
-
-        System.out.println("Closed for inspection: "
-                + ride.isClosedForInspection());
-
-        System.out.println();
-
-        ride.runCycle();
-
         System.out.println();
         System.out.println("=== Part 4 - Visit History ===");
 
@@ -74,11 +125,9 @@ public class AssignmentTwo {
         ride.recordVisitor(v5);
 
         System.out.println();
-
         ride.displayVisitHistory();
 
         System.out.println();
-
         ride.hasVisited(v2);
 
         System.out.println();
@@ -103,14 +152,11 @@ public class AssignmentTwo {
         System.out.println();
         System.out.println("=== Part 5 - Operating Attractions ===");
 
-        Staff chris = new Staff(2, "Chris", 35, "Ride Operator");
-        Staff jamie = new Staff(3, "Jamie", 32, "Show Operator");
-
         Ride rollerCoaster =
-                new Ride(201, "Roller Coaster", 2);
+                new Ride(301, "Roller Coaster", 2);
 
         Show magicShow =
-                new Show(202, "Magic Show", 3);
+                new Show(302, "Magic Show", 3);
 
         rollerCoaster.assignOperator(chris);
         magicShow.assignOperator(jamie);
@@ -126,14 +172,17 @@ public class AssignmentTwo {
 
         System.out.println();
         System.out.println("Ride with visitors waiting:");
+
         rollerCoaster.runCycle();
 
         System.out.println();
         System.out.println("Ride with an empty waiting line:");
+
         rollerCoaster.runCycle();
 
         System.out.println();
         System.out.println("Show with no visitors waiting:");
+
         magicShow.runCycle();
 
         System.out.println();
@@ -155,13 +204,13 @@ public class AssignmentTwo {
                 new Staff(5, "Emma", 29, "Show Operator");
 
         Ride parkRide =
-                new Ride(301, "Park Roller Coaster", 2);
+                new Ride(401, "Park Roller Coaster", 2);
 
         Show parkShow =
-                new Show(302, "Park Magic Show", 3);
+                new Show(402, "Park Magic Show", 3);
 
         Ride waterRide =
-                new Ride(303, "Water Ride", 2);
+                new Ride(403, "Water Ride", 2);
 
         parkRide.assignOperator(david);
         parkShow.assignOperator(emma);
@@ -174,17 +223,19 @@ public class AssignmentTwo {
 
         waterRide.joinWaitingLine(v3);
 
-        parkRide.runCycle();
-        parkShow.runCycle();
-        waterRide.runCycle();
-
         park.registerAttraction(parkRide);
         park.registerAttraction(parkShow);
         park.registerAttraction(waterRide);
 
         System.out.println();
 
-        park.getAttraction(302);
+        park.getAttraction(402);
+
+        System.out.println();
+
+        parkRide.runCycle();
+        parkShow.runCycle();
+        waterRide.runCycle();
 
         System.out.println();
 
@@ -198,10 +249,10 @@ public class AssignmentTwo {
         System.out.println("=== Part 7 - Backup and Restore ===");
 
         Ride backupRide =
-                new Ride(401, "Backup Roller Coaster", 2);
+                new Ride(501, "Backup Roller Coaster", 2);
 
         Show backupShow =
-                new Show(402, "Backup Magic Show", 2);
+                new Show(502, "Backup Magic Show", 2);
 
         Staff backupStaff =
                 new Staff(6, "Daniel", 31, "Ride Operator");
@@ -248,10 +299,10 @@ public class AssignmentTwo {
         System.out.println("Restored attractions:");
 
         Attraction restoredRide =
-                restoredPark.getAttraction(401);
+                restoredPark.getAttraction(501);
 
         Attraction restoredShow =
-                restoredPark.getAttraction(402);
+                restoredPark.getAttraction(502);
 
         System.out.println();
         System.out.println("Restored ride operator: "
@@ -294,94 +345,103 @@ public class AssignmentTwo {
         Park concurrentPark = new Park();
 
         Ride concurrentRide =
-                new Ride(501, "Concurrent Roller Coaster", 2);
+                new Ride(601, "Concurrent Roller Coaster", 2);
 
         Show concurrentShow =
-                new Show(502, "Concurrent Magic Show", 2);
+                new Show(602, "Concurrent Magic Show", 2);
 
         Ride concurrentWaterRide =
-                new Ride(503, "Concurrent Water Ride", 2);
+                new Ride(603, "Concurrent Water Ride", 2);
 
-        concurrentRide.assignOperator(
-                new Staff(8, "Ryan", 30, "Ride Operator"));
+        Staff ryan =
+                new Staff(8, "Ryan", 30, "Ride Operator");
 
-        concurrentShow.assignOperator(
-                new Staff(9, "Lucy", 28, "Show Operator"));
+        Staff lucy =
+                new Staff(9, "Lucy", 28, "Show Operator");
 
-        concurrentWaterRide.assignOperator(
-                new Staff(10, "Mark", 34, "Ride Operator"));
+        Staff mark =
+                new Staff(10, "Mark", 34, "Ride Operator");
 
-        Visitor visitor1 =
-                new Visitor(4001, "Visitor One", 25, "Adult");
+        concurrentRide.assignOperator(ryan);
+        concurrentShow.assignOperator(lucy);
+        concurrentWaterRide.assignOperator(mark);
 
-        Visitor visitor2 =
-                new Visitor(4002, "Visitor Two", 27, "Adult");
+        Visitor visitorOne =
+                new Visitor(4001, "Visitor One", 21, "Adult");
 
-        Visitor visitor3 =
-                new Visitor(4003, "Visitor Three", 22, "Student");
+        Visitor visitorTwo =
+                new Visitor(4002, "Visitor Two", 23, "Adult");
 
-        Visitor visitor4 =
-                new Visitor(4004, "Visitor Four", 31, "Adult");
+        Visitor visitorThree =
+                new Visitor(4003, "Visitor Three", 25, "Adult");
 
-        concurrentRide.joinWaitingLine(visitor1);
-        concurrentRide.joinWaitingLine(visitor2);
+        Visitor visitorFour =
+                new Visitor(4004, "Visitor Four", 27, "Adult");
 
-        concurrentShow.joinWaitingLine(visitor3);
-        concurrentShow.joinWaitingLine(visitor4);
+        concurrentRide.joinWaitingLine(visitorOne);
+        concurrentRide.joinWaitingLine(visitorTwo);
 
-        concurrentWaterRide.joinWaitingLine(visitor1);
-        concurrentWaterRide.joinWaitingLine(visitor3);
+        concurrentShow.joinWaitingLine(visitorThree);
+        concurrentShow.joinWaitingLine(visitorFour);
+
+        concurrentWaterRide.joinWaitingLine(visitorOne);
+        concurrentWaterRide.joinWaitingLine(visitorThree);
 
         concurrentPark.registerAttraction(concurrentRide);
         concurrentPark.registerAttraction(concurrentShow);
         concurrentPark.registerAttraction(concurrentWaterRide);
 
-        ExecutorService executor =
-                Executors.newFixedThreadPool(3);
+        Runnable rideTask = new Runnable() {
+            @Override
+            public void run() {
+                concurrentRide.runCycle();
+            }
+        };
 
-        Future<?> rideTask = executor.submit(() -> {
-            int before = concurrentRide.getVisitCount();
-            concurrentRide.runCycle();
-            int after = concurrentRide.getVisitCount();
-            concurrentPark.addVisitorsServed(after - before);
-        });
+        Runnable showTask = new Runnable() {
+            @Override
+            public void run() {
+                concurrentShow.runCycle();
+            }
+        };
 
-        Future<?> showTask = executor.submit(() -> {
-            int before = concurrentShow.getVisitCount();
-            concurrentShow.runCycle();
-            int after = concurrentShow.getVisitCount();
-            concurrentPark.addVisitorsServed(after - before);
-        });
+        Runnable waterTask = new Runnable() {
+            @Override
+            public void run() {
+                concurrentWaterRide.runCycle();
+            }
+        };
 
-        Future<?> waterTask = executor.submit(() -> {
-            int before = concurrentWaterRide.getVisitCount();
-            concurrentWaterRide.runCycle();
-            int after = concurrentWaterRide.getVisitCount();
-            concurrentPark.addVisitorsServed(after - before);
-        });
+        Thread rideThread = new Thread(rideTask);
+        Thread showThread = new Thread(showTask);
+        Thread waterThread = new Thread(waterTask);
+
+        rideThread.start();
+        showThread.start();
+        waterThread.start();
 
         try {
-            rideTask.get();
-            showTask.get();
-            waterTask.get();
-
-            executor.shutdown();
-
-            System.out.println();
-            System.out.println("All attraction tasks have finished.");
-            System.out.println("Final park-wide visitors served: "
-                    + concurrentPark.getTotalVisitorsServed());
-
-        } catch (Exception e) {
-            System.out.println(
-                    "Concurrency error: " + e.getMessage()
-            );
-
-            executor.shutdown();
+            rideThread.join();
+            showThread.join();
+            waterThread.join();
+        } catch (InterruptedException e) {
+            System.out.println("Park operation was interrupted.");
         }
+
+        int totalVisitorsServed =
+                concurrentRide.getVisitCount()
+                        + concurrentShow.getVisitCount()
+                        + concurrentWaterRide.getVisitCount();
+
+        System.out.println();
+        System.out.println("All attraction tasks have finished.");
+
+        System.out.println("Final park-wide visitors served: "
+                + totalVisitorsServed);
 
         System.out.println();
         System.out.println("Part 8 completed.");
+
         System.out.println();
         System.out.println("=== Assessment Demonstration Complete ===");
     }

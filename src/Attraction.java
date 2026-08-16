@@ -233,42 +233,6 @@ public abstract class Attraction {
                 + getName() + ".");
     }
 
-    public void runCycle(ParkCounter counter) {
-        if (counter == null) {
-            throw new IllegalArgumentException("Park counter cannot be null.");
-        }
-
-        if (!canRun()) {
-            return;
-        }
-
-        int served = 0;
-        int limit = maxVisitorsPerCycle;
-
-        while (served < limit && !waitingLine.isEmpty()) {
-            Visitor visitor = waitingLine.poll();
-
-            visitHistory.add(visitor);
-
-            System.out.println(visitor.getName()
-                    + " was served by " + getName() + ".");
-
-            served++;
-        }
-
-        if (served == 0) {
-            System.out.println(getName()
-                    + " performed with no visitors waiting.");
-        }
-
-        counter.addVisitors(served);
-
-        cycleCount++;
-
-        System.out.println("Cycle completed for "
-                + getName() + ".");
-    }
-
     @Override
     public String toString() {
         String operatorName =
