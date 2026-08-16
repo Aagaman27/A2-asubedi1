@@ -33,8 +33,11 @@ public class AssignmentTwo {
         System.out.println();
         System.out.println(ride);
 
-        System.out.println("Inspection result: " + ride.getInspectionResult());
-        System.out.println("Closed for inspection: " + ride.isClosedForInspection());
+        System.out.println("Inspection result: "
+                + ride.getInspectionResult());
+
+        System.out.println("Closed for inspection: "
+                + ride.isClosedForInspection());
 
         System.out.println();
         System.out.println("=== Inspection Test ===");
@@ -43,10 +46,54 @@ public class AssignmentTwo {
 
         System.out.println();
         System.out.println("After inspection:");
-        System.out.println("Inspection result: " + ride.getInspectionResult());
-        System.out.println("Closed for inspection: " + ride.isClosedForInspection());
+
+        System.out.println("Inspection result: "
+                + ride.getInspectionResult());
+
+        System.out.println("Closed for inspection: "
+                + ride.isClosedForInspection());
 
         System.out.println();
+
         ride.runCycle();
+
+        System.out.println();
+        System.out.println("=== Part 4 - Visit History ===");
+
+        Visitor v4 = new Visitor(1004, "Alex", 20, "Student");
+        Visitor v5 = new Visitor(1005, "Jordan", 30, "Senior");
+
+        ride.recordVisitor(v1);
+        ride.recordVisitor(v2);
+        ride.recordVisitor(v3);
+        ride.recordVisitor(v4);
+        ride.recordVisitor(v5);
+
+        System.out.println();
+
+        ride.displayVisitHistory();
+
+        System.out.println();
+
+        ride.hasVisited(v2);
+
+        System.out.println();
+
+        Visitor unknownVisitor =
+                new Visitor(1006, "Taylor", 24, "Adult");
+
+        ride.hasVisited(unknownVisitor);
+
+        System.out.println();
+
+        ride.getVisitHistoryCount();
+
+        System.out.println();
+
+        ride.displayVisitHistoryByAge();
+
+        System.out.println();
+
+        ride.displayVisitHistoryByNameAndTicketType();
     }
 }
