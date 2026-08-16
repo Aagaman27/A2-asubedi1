@@ -5,4 +5,6 @@ public interface Inspectable {
     String getInspectionResult();
 
     boolean isClosedForInspection();
+
+    void setClosedForInspection(boolean closed);
 }

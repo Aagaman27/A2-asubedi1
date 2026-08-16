@@ -1,12 +1,31 @@
-public class Ride extends Attraction implements Inspectable {
+public class Toilet implements Inspectable {
 
+    private int id;
+    private String name;
     private String inspectionResult;
     private boolean closedForInspection;
 
-    public Ride(int id, String name, int maxVisitorsPerCycle) {
-        super(id, name, maxVisitorsPerCycle);
+    public Toilet(int id, String name) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("Toilet ID must be a positive number.");
+        }
+
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Toilet name cannot be empty.");
+        }
+
+        this.id = id;
+        this.name = name.trim();
         this.inspectionResult = "Not yet inspected";
         this.closedForInspection = false;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -34,22 +53,10 @@ public class Ride extends Attraction implements Inspectable {
     }
 
     @Override
-    protected boolean canRun() {
-        if (getOperator() == null) {
-            System.out.println(getName() + " cannot run: no operator assigned.");
-            return false;
-        }
-
-        if (closedForInspection) {
-            System.out.println(getName() + " cannot run: ride is closed for inspection.");
-            return false;
-        }
-
-        if (!hasWaitingVisitors()) {
-            System.out.println(getName() + " cannot run: waiting line is empty.");
-            return false;
-        }
-
-        return true;
+    public String toString() {
+        return "Toilet[ID=" + id
+                + ", Name=" + name
+                + ", InspectionResult=" + inspectionResult
+                + ", ClosedForInspection=" + closedForInspection + "]";
     }
 }

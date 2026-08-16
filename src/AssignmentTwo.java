@@ -39,18 +39,14 @@ public class AssignmentTwo {
         System.out.println();
         System.out.println("=== Inspection Test ===");
 
-        ride.recordInspectionResult("Failed");
+        mike.performInspection(ride);
 
+        System.out.println();
+        System.out.println("After inspection:");
         System.out.println("Inspection result: " + ride.getInspectionResult());
         System.out.println("Closed for inspection: " + ride.isClosedForInspection());
 
         System.out.println();
         ride.runCycle();
-
-        ride.recordInspectionResult("Passed");
-
-        System.out.println();
-        System.out.println("Inspection result: " + ride.getInspectionResult());
-        System.out.println("Closed for inspection: " + ride.isClosedForInspection());
     }
 }
