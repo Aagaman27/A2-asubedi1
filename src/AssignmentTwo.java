@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class AssignmentTwo {
 
@@ -391,53 +394,59 @@ public class AssignmentTwo {
         concurrentPark.registerAttraction(concurrentShow);
         concurrentPark.registerAttraction(concurrentWaterRide);
 
-        Runnable rideTask = new Runnable() {
+        ExecutorService executor =
+                Executors.newFixedThreadPool(3);
+
+        Future<?> rideFuture = executor.submit(new Runnable() {
             @Override
             public void run() {
                 concurrentRide.runCycle();
+                concurrentPark.addVisitorsServed(
+                        concurrentRide.getVisitCount()
+                );
             }
-        };
+        });
 
-        Runnable showTask = new Runnable() {
+        Future<?> showFuture = executor.submit(new Runnable() {
             @Override
             public void run() {
                 concurrentShow.runCycle();
+                concurrentPark.addVisitorsServed(
+                        concurrentShow.getVisitCount()
+                );
             }
-        };
+        });
 
-        Runnable waterTask = new Runnable() {
+        Future<?> waterFuture = executor.submit(new Runnable() {
             @Override
             public void run() {
                 concurrentWaterRide.runCycle();
+                concurrentPark.addVisitorsServed(
+                        concurrentWaterRide.getVisitCount()
+                );
             }
-        };
-
-        Thread rideThread = new Thread(rideTask);
-        Thread showThread = new Thread(showTask);
-        Thread waterThread = new Thread(waterTask);
-
-        rideThread.start();
-        showThread.start();
-        waterThread.start();
+        });
 
         try {
-            rideThread.join();
-            showThread.join();
-            waterThread.join();
-        } catch (InterruptedException e) {
-            System.out.println("Park operation was interrupted.");
+            rideFuture.get();
+            showFuture.get();
+            waterFuture.get();
+
+            executor.shutdown();
+
+            System.out.println();
+            System.out.println("All attraction tasks have finished.");
+
+            System.out.println("Final park-wide visitors served: "
+                    + concurrentPark.getTotalVisitorsServed());
+
+        } catch (Exception e) {
+            System.out.println(
+                    "Park operation was interrupted: "
+                            + e.getMessage()
+            );
+            executor.shutdown();
         }
-
-        int totalVisitorsServed =
-                concurrentRide.getVisitCount()
-                        + concurrentShow.getVisitCount()
-                        + concurrentWaterRide.getVisitCount();
-
-        System.out.println();
-        System.out.println("All attraction tasks have finished.");
-
-        System.out.println("Final park-wide visitors served: "
-                + totalVisitorsServed);
 
         System.out.println();
         System.out.println("Part 8 completed.");
