@@ -139,6 +139,14 @@ public abstract class Attraction {
         return count;
     }
 
+    public int getVisitCount() {
+        return visitHistory.size();
+    }
+
+    public List<Visitor> getVisitHistory() {
+        return new ArrayList<>(visitHistory);
+    }
+
     public void displayVisitHistory() {
         System.out.println("Visit history for " + getName() + ":");
 

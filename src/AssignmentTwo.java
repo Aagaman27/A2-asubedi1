@@ -99,47 +99,104 @@ public class AssignmentTwo {
         System.out.println();
         System.out.println("=== Part 5 - Operating Attractions ===");
 
-        Ride testRide = new Ride(102, "Roller Coaster", 2);
-        Show show = new Show(201, "Magic Show", 50);
+        Staff chris = new Staff(2, "Chris", 30, "Ride Operator");
+        Staff jamie = new Staff(3, "Jamie", 35, "Show Operator");
 
-        Staff rideOperator =
-                new Staff(2, "Chris", 35, "Ride Operator");
+        Ride rollerCoaster =
+                new Ride(201, "Roller Coaster", 2);
 
-        Staff showOperator =
-                new Staff(3, "Jamie", 29, "Show Operator");
+        Show magicShow =
+                new Show(202, "Magic Show", 50);
 
-        testRide.assignOperator(rideOperator);
-        show.assignOperator(showOperator);
+        rollerCoaster.assignOperator(chris);
+        magicShow.assignOperator(jamie);
 
-        Visitor v6 =
-                new Visitor(1007, "Morgan", 19, "Student");
+        Visitor morgan =
+                new Visitor(1007, "Morgan", 26, "Adult");
 
-        Visitor v7 =
-                new Visitor(1008, "Casey", 26, "Adult");
+        Visitor casey =
+                new Visitor(1008, "Casey", 24, "Adult");
 
-        testRide.joinWaitingLine(v6);
-        testRide.joinWaitingLine(v7);
+        rollerCoaster.joinWaitingLine(morgan);
+        rollerCoaster.joinWaitingLine(casey);
 
         System.out.println();
         System.out.println("Ride with visitors waiting:");
-
-        testRide.runCycle();
+        rollerCoaster.runCycle();
 
         System.out.println();
         System.out.println("Ride with an empty waiting line:");
-
-        testRide.runCycle();
+        rollerCoaster.runCycle();
 
         System.out.println();
         System.out.println("Show with no visitors waiting:");
-
-        show.runCycle();
+        magicShow.runCycle();
 
         System.out.println();
         System.out.println("Ride cycle count: "
-                + testRide.getCycleCount());
+                + rollerCoaster.getCycleCount());
 
         System.out.println("Show cycle count: "
-                + show.getCycleCount());
+                + magicShow.getCycleCount());
+
+        System.out.println();
+        System.out.println("=== Part 6 - Managing the Park ===");
+
+        Park park = new Park();
+
+        Ride parkRollerCoaster =
+                new Ride(301, "Park Roller Coaster", 2);
+
+        Show parkMagicShow =
+                new Show(302, "Park Magic Show", 50);
+
+        Ride waterRide =
+                new Ride(303, "Water Ride", 2);
+
+        Staff parkRideOperator =
+                new Staff(4, "David", 30, "Ride Operator");
+
+        Staff parkShowOperator =
+                new Staff(5, "Emma", 28, "Show Operator");
+
+        parkRollerCoaster.assignOperator(parkRideOperator);
+        parkMagicShow.assignOperator(parkShowOperator);
+        waterRide.assignOperator(parkRideOperator);
+
+        Visitor parkAlex =
+                new Visitor(1101, "Alex", 25, "Adult");
+
+        Visitor parkSam =
+                new Visitor(1102, "Sam", 28, "Adult");
+
+        Visitor parkJordan =
+                new Visitor(1103, "Jordan", 22, "Adult");
+
+        parkRollerCoaster.joinWaitingLine(parkAlex);
+        parkRollerCoaster.joinWaitingLine(parkSam);
+
+        parkMagicShow.joinWaitingLine(parkAlex);
+
+        waterRide.joinWaitingLine(parkJordan);
+
+        parkRollerCoaster.runCycle();
+        parkMagicShow.runCycle();
+        waterRide.runCycle();
+
+        park.registerAttraction(parkRollerCoaster);
+        park.registerAttraction(parkMagicShow);
+        park.registerAttraction(waterRide);
+
+        System.out.println();
+
+        park.getAttraction(302);
+
+        System.out.println();
+
+        park.displayVisitorCounts();
+
+        System.out.println();
+
+        park.displayDistinctVisitorCount();
     }
 }
